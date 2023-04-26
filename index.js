@@ -1,28 +1,15 @@
-const start = performance.now();
-
-const fizzBuzz = (() => {
-  const memo = new Map();
-
-  const isDivisibleBy = (n) => (x) => x % n === 0;
-
-  const fizzBuzz = (n) =>
-    (isDivisibleBy(3)(n) ? "Fizz" : "") +
-    (isDivisibleBy(5)(n) ? "Buzz" : "") ||
-    n;
-
-  return (n) => {
-    if (memo.has(n)) {
-      return memo.get(n);
+function run() {
+  for (let i = 1; i <= 1000000; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+      console.log("FizzBuzz");
+    } else if (i % 3 === 0) {
+      console.log("Fizz");
+    } else if (i % 5 === 0) {
+      console.log("Buzz");
+    } else {
+      console.log(i);
     }
-    const result = fizzBuzz(n);
-    memo.set(n, result);
-    return result;
-  };
-})();
+  }
+}
 
-const fizzBuzzNumbers = [...Array(100000).keys()].map(x => fizzBuzz(x + 1));
-
-// console.log(JSON.stringify(fizzBuzzNumbers));
-
-const end = performance.now();
-console.log(`Elapsed time: ${end - start} ms`);
+run();
