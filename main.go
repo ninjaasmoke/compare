@@ -39,5 +39,5 @@ func run() {
 		fizzBuzzNumbers = append(fizzBuzzNumbers, f(i))
 	}
 
-	fmt.Println("FizzBuzz sequence:", fizzBuzzNumbers)
+	// fmt.Println("FizzBuzz sequence:", fizzBuzzNumbers)
 }
