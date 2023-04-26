@@ -1,6 +1,6 @@
 function run() {
   let output = "";
-  for (let i = 1; i <= 1000000; ++i) {
+  for (let i = 1; i <= 10000000; ++i) {
     output +=
       i % 15
         ? i % 5

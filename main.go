@@ -12,7 +12,7 @@ func main() {
 
 func run() {
 	var b strings.Builder
-	for i := 1; i <= 1000000; i++ {
+	for i := 1; i <= 10000000; i++ {
 		switch {
 		case i%15 == 0:
 			b.WriteString("FizzBuzz\n")
