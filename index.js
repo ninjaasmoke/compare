@@ -25,4 +25,4 @@ const fizzBuzzNumbers = [...Array(100000).keys()].map(x => fizzBuzz(x + 1));
 // console.log(JSON.stringify(fizzBuzzNumbers));
 
 const end = performance.now();
-console.log(`Execution time: ${end - start} ms`);
+console.log(`Elapsed time: ${end - start} ms`);
