@@ -22,11 +22,31 @@ int partition(int arr[], int low, int high){
 
 void quickSort(int arr[], int low, int high){
     if(low < high){
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi-1);
-        quickSort(arr, pi+1, high);
+        int pivot = arr[low];
+        int lt = low;
+        int gt = high;
+        int i = low + 1;
+        
+        while(i <= gt){
+            if(arr[i] < pivot){
+                swap(&arr[i], &arr[lt]);
+                lt++;
+                i++;
+            }
+            else if(arr[i] > pivot){
+                swap(&arr[i], &arr[gt]);
+                gt--;
+            }
+            else{
+                i++;
+            }
+        }
+        
+        quickSort(arr, low, lt-1);
+        quickSort(arr, gt+1, high);
     }
 }
+
 
 int main(){
     FILE *fp;
