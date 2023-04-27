@@ -15,4 +15,4 @@ if __name__ == '__main__':
     sorted_arr = quicksort(arr)
     
     with open('./python/output.txt', 'w') as f:
-        f.write(','.join(str(x) for x in sorted_arr))
+        f.write(' '.join(str(x) for x in sorted_arr))

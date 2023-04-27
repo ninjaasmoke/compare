@@ -20,6 +20,8 @@ bash run.sh
 **HELLO? RUST!!? plis help! idk rust**
 
 ### Disclaimer
-`data.txt` was too large to push via git. so i pushed a much smaller file `data_small.txt`.
+~~`data.txt` was too large to push via git. so i pushed a much smaller file `data_small.txt`.~~
 
-`data.txt` is ~5mb.
+~~`data.txt` is ~5mb.~~
+
+added a new `generate_random.py`, so go ahead and generate whatever.

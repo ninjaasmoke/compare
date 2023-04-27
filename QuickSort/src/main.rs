@@ -18,7 +18,7 @@ fn main() {
     let mut file = File::create(output_path).expect("failed to create output file");
 
     for number in numbers {
-        writeln!(file, "{}", number).expect("failed to write number to output file");
+        write!(file, "{} ", number).expect("failed to write number to output file");
     }
 }
 
