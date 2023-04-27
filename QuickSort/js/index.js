@@ -1,38 +1,42 @@
 const fs = require('fs');
 
-function quicksort(numbers) {
-  if (numbers.length <= 1) {
-    return numbers;
-  }
-
-  const pivotIndex = Math.floor(numbers.length / 2);
-  const pivot = numbers[pivotIndex];
-  const left = [];
-  const right = [];
-
-  for (let i = 0; i < numbers.length; i++) {
-    if (i === pivotIndex) {
-      continue;
-    }
-
-    if (numbers[i] < pivot) {
-      left.push(numbers[i]);
-    } else {
-      right.push(numbers[i]);
-    }
-  }
-
-  return [...quicksort(left), pivot, ...quicksort(right)];
-}
-
 const inputPath = 'data.txt';
-const outputPath = './output/js.txt';
-const inputBuffer = fs.readFileSync(inputPath);
-const inputString = inputBuffer.toString('utf8');
+const outputPath = './output/javascript.txt';
+
+const inputString = fs.readFileSync(inputPath, 'utf8');
+
 const numbers = inputString
-  .trim()
-  .split(',')
-  .map(str => parseInt(str, 10));
-const sortedNumbers = quicksort(numbers);
-const outputString = sortedNumbers.join(' ');
-fs.writeFileSync(outputPath, outputString, 'utf8');
+    .split(',')
+    .map(numString => parseInt(numString.trim(), 10));
+
+quicksort(numbers);
+
+const outputString = numbers.join(' ');
+
+fs.writeFileSync(outputPath, outputString);
+
+function quicksort(arr, left = 0, right = arr.length - 1) {
+    if (left >= right) {
+        return;
+    }
+
+    let pivot = arr[left];
+    let i = left;
+    let j = right;
+
+    for (let k = left + 1; k <= j;) {
+        if (arr[k] < pivot) {
+            [arr[k], arr[i]] = [arr[i], arr[k]];
+            i++;
+            k++;
+        } else if (arr[k] > pivot) {
+            [arr[k], arr[j]] = [arr[j], arr[k]];
+            j--;
+        } else {
+            k++;
+        }
+    }
+
+    quicksort(arr, left, i - 1);
+    quicksort(arr, j + 1, right);
+}
