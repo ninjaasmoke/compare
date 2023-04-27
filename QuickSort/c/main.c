@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-#define MAXSIZE 999999
 
 void swap(int* a, int* b){
     int t = *a;
@@ -33,8 +30,10 @@ void quickSort(int arr[], int low, int high){
 
 int main(){
     FILE *fp;
-    char buffer[MAXSIZE];
+    int val;
     int size = 0;
+    int capacity = 0;
+    int* arr = NULL;
 
     fp = fopen("data.txt", "r");
     if(fp == NULL){
@@ -42,24 +41,22 @@ int main(){
         return 1;
     }
 
-    int* arr = malloc(MAXSIZE * sizeof(int));
-    if (arr == NULL) {
-        printf("Error: Could not allocate memory\n");
-        return 1;
-    }
-    fgets(buffer, MAXSIZE, fp);
-    char* token = strtok(buffer, ",");
-    while(token != NULL){
-        int val = atoi(token);
-        arr[size] = val;
-        size++;
-        token = strtok(NULL, ", ");
+    while(fscanf(fp, "%d,", &val) == 1){
+        if (size == capacity) {
+            capacity = (capacity == 0) ? 1 : capacity * 2;
+            arr = realloc(arr, capacity * sizeof(int));
+            if (arr == NULL) {
+                printf("Error: Could not allocate memory\n");
+                return 1;
+            }
+        }
+        arr[size++] = val;
     }
     fclose(fp);
 
     quickSort(arr, 0, size-1);
 
-    fp = fopen("./c/output.txt", "w");
+    fp = fopen("./output/c.txt", "w");
     if(fp == NULL){
         printf("Error: Could not open file for writing\n");
         free(arr);
