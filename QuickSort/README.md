@@ -14,6 +14,11 @@ the steps in each program is:
 bash run.sh
 ```
 
+## So far...
+![Screenshot 2023-04-27 at 5 51 20 PM](https://user-images.githubusercontent.com/57380806/234861389-8fb08d60-a1a1-4cbe-b3c5-23c59c84c6b6.png)
+
+**HELLO? RUST!!? plis help! idk rust**
+
 ### Disclaimer
 `data.txt` was too large to push via git. so i pushed a much smaller file `data_small.txt`.
 
