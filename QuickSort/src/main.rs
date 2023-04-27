@@ -10,7 +10,14 @@ fn main() {
 
     let mut numbers: Vec<i32> = reader
         .split(b',')
-        .map(|result| String::from_utf8(result.expect("failed to read line")).expect("invalid UTF-8 string").trim().parse().expect("invalid number"))
+        .map(|result| {
+            let bytes = result.expect("failed to read line");
+            std::str::from_utf8(&bytes)
+                .expect("invalid UTF-8 string")
+                .trim()
+                .parse()
+                .expect("invalid number")
+        })
         .collect();
 
     quicksort(&mut numbers);
