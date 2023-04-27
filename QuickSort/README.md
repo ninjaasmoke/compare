@@ -8,6 +8,12 @@ the steps in each program is:
 2. Sort the numbers
 3. Write the sorted array back to a file "output.txt"
 
+## How to run?
+
+```
+bash run.sh
+```
+
 ### Disclaimer
 `data.txt` was too large to push via git. so i pushed a much smaller file `data_small.txt`.
 
