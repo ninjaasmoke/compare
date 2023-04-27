@@ -1,33 +1,40 @@
 use std::fs::File;
-use std::io::{BufRead, BufReader, BufWriter, Write};
+use std::io::{Read, Write};
+use std::fmt::{Write as FWrite};
+
+const BUFFER_SIZE: usize = 5 * 1024 * 1024;
 
 fn main() {
     let input_path = "data.txt";
     let output_path = "./output/rust.txt";
 
-    let file = File::open(input_path).expect("failed to open input file");
-    let reader = BufReader::new(file);
+    let mut file = File::open(input_path).expect("failed to open input file");
 
-    let mut numbers: Vec<i32> = reader
-        .split(b',')
-        .map(|result| {
-            let bytes = result.expect("failed to read line");
-            std::str::from_utf8(&bytes)
-                .expect("invalid UTF-8 string")
-                .trim()
-                .parse()
-                .expect("invalid number")
-        })
+    // ensure string buffer is the same as Go.
+    let mut string = String::with_capacity(BUFFER_SIZE);
+
+    // instead of verify the UTF-8 correctness of each substring,
+    // do it all at once while reading the file.
+    file.read_to_string(&mut string)
+        .expect("input file cannot be read or is not UTF-8");
+        
+    let mut numbers: Vec<i32> = string
+        .split(",")
+        .map(|substr| substr.trim().parse::<i32>().expect("invalid number"))
         .collect();
 
     quicksort(&mut numbers);
-
-    let mut file = BufWriter::new(File::create(output_path).expect("failed to create output file"));
-
+    
+    // The size of our output shouldn't change (just be re-ordered)
+    // so we'll clear the string we read data in with, and write to it.
+    string.clear();
     for number in numbers {
-        write!(file, "{} ", number).expect("failed to write number to output file");
+        write!(&mut string, "{} ", number).expect("failed to format a number");
     }
-    file.flush().expect("failed to flush output file");
+    
+    let mut output_file = File::create(output_path).expect("failed to create output file");
+    output_file.write_all(string.as_bytes()).expect("filed to write output");
+    output_file.sync_all().expect("failed to fsync");
 }
 
 fn quicksort(numbers: &mut [i32]) {
@@ -35,28 +42,11 @@ fn quicksort(numbers: &mut [i32]) {
         return;
     }
 
-    let pivot = numbers[0];
-    let mut i = 0;
-    let mut lt = 0;
-    let mut gt = numbers.len();
+    let pivot = partition(numbers);
 
-    while i < gt {
-        if numbers[i] < pivot {
-            numbers.swap(lt, i);
-            lt += 1;
-            i += 1;
-        } else if numbers[i] > pivot {
-            gt -= 1;
-            numbers.swap(gt, i);
-        } else {
-            i += 1;
-        }
-    }
-
-    quicksort(&mut numbers[..lt]);
-    quicksort(&mut numbers[gt..]);
+    quicksort(&mut numbers[..pivot]);
+    quicksort(&mut numbers[pivot + 1..]);
 }
-
 
 fn partition(numbers: &mut [i32]) -> usize {
     let pivot_index = numbers.len() / 2;
