@@ -1,4 +1,4 @@
-# compare
+# compare - using FizzBuzz
 
 You are welcome to contribute
 
