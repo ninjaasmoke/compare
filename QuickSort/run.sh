@@ -9,3 +9,5 @@ echo "running Go"
 time ./go/run > /dev/null
 echo "running RUST"
 time target/release/QuickSort > /dev/null
+echo "running JS"
+time node ./js/index.js > /dev/null
