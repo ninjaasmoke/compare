@@ -35,11 +35,28 @@ fn quicksort(numbers: &mut [i32]) {
         return;
     }
 
-    let pivot = partition(numbers);
+    let pivot = numbers[0];
+    let mut i = 0;
+    let mut lt = 0;
+    let mut gt = numbers.len();
 
-    quicksort(&mut numbers[..pivot]);
-    quicksort(&mut numbers[pivot + 1..]);
+    while i < gt {
+        if numbers[i] < pivot {
+            numbers.swap(lt, i);
+            lt += 1;
+            i += 1;
+        } else if numbers[i] > pivot {
+            gt -= 1;
+            numbers.swap(gt, i);
+        } else {
+            i += 1;
+        }
+    }
+
+    quicksort(&mut numbers[..lt]);
+    quicksort(&mut numbers[gt..]);
 }
+
 
 fn partition(numbers: &mut [i32]) -> usize {
     let pivot_index = numbers.len() / 2;
