@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{BufRead, BufReader, Write};
+use std::io::{BufRead, BufReader, BufWriter, Write};
 
 fn main() {
     let input_path = "data.txt";
@@ -15,11 +15,12 @@ fn main() {
 
     quicksort(&mut numbers);
 
-    let mut file = File::create(output_path).expect("failed to create output file");
+    let mut file = BufWriter::new(File::create(output_path).expect("failed to create output file"));
 
     for number in numbers {
         write!(file, "{} ", number).expect("failed to write number to output file");
     }
+    file.flush().expect("failed to flush output file");
 }
 
 fn quicksort(numbers: &mut [i32]) {
