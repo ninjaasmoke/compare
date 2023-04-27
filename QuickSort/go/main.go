@@ -42,7 +42,7 @@ func main() {
 
 	quicksort(arr, 0, len(arr)-1)
 
-	output, err := os.Create("./go/output.txt")
+	output, err := os.Create("./output/go.txt")
 	if err != nil {
 		fmt.Println("Error creating file:", err)
 		return

@@ -3,7 +3,7 @@ use std::io::{BufRead, BufReader, BufWriter, Write};
 
 fn main() {
     let input_path = "data.txt";
-    let output_path = "./src/output.txt";
+    let output_path = "./output/rust.txt";
 
     let file = File::open(input_path).expect("failed to open input file");
     let reader = BufReader::new(file);
